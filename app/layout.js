@@ -99,6 +99,13 @@ export default function RootLayout({ children }) {
 
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      window.location.href = `/search/${event.target.value}`;
+      console.log(event.target.value);
+    }
+  }
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('token')) {
@@ -141,6 +148,7 @@ export default function RootLayout({ children }) {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
+                    onKeyDown={handleKeyDown}
                   />
                 </Search>
 
