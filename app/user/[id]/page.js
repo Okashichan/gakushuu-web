@@ -106,7 +106,7 @@ export default function UserPage({ params }) {
                 }}
             >
                 <Paper elevation={3} style={{ padding: 16, maxWidth: 400, margin: 'auto' }}>
-                    <Avatar src={user && user.avatar} style={{ width: 80, height: 80, margin: 'auto' }} />
+                    <Avatar src={user && user.avatar_url} style={{ width: 80, height: 80, margin: 'auto' }} />
                     <Typography variant="h6" style={{ textAlign: 'center', marginTop: 10 }}>
                         {user && user.username}
                     </Typography>

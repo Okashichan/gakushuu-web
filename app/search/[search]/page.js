@@ -11,6 +11,9 @@ import Divider from '@mui/material/Divider';
 const BASE_URL = 'http://127.0.0.1:8000';
 
 const TranslationCard = ({ data }) => {
+
+    console.log(data);
+
     return (
         <Box>
             <Card variant="outlined">
@@ -20,12 +23,11 @@ const TranslationCard = ({ data }) => {
                     </Typography>
                     <ul>
                         {
-                            data?.ua_source != null &&
-                            data.ua_source.map((item, index) => (
+                            data.ua_sourse.map((item, index) => (
                                 <li key={item.id}>
                                     <Typography variant="subtitle1">{item.ua_translation}</Typography>
-                                    <Typography variant="body2">Original: {item.original}</Typography>
-                                    <Typography variant="body2">Romanization: {item.romanization}</Typography>
+                                    <Typography variant="body2">Kanji: {item.kanji}</Typography>
+                                    <Typography variant="body2">Romanization: {item.romaji}</Typography>
                                     <Typography variant="body2">Transliteration: {item.transliteration}</Typography>
                                 </li>
                             ))}
@@ -39,15 +41,16 @@ const TranslationCard = ({ data }) => {
                         Англійський словник
                     </Typography>
                     <ul>
-                        {data && data.en_source.map((item, index) => (
-                            <li key={index}>
-                                <Typography variant="subtitle1">{item.en_translation}</Typography>
-                                <Typography variant="body2">Original: {item.original}</Typography>
-                                <Typography variant="body2">Romanization: {item.romanization}</Typography>
-                                <Typography variant="body2">Transliteration: {item.transliteration}</Typography>
-                                <Button href={'/dictionary/' + item.id} variant="contained" color="primary" >Додати до словника</Button>
-                            </li>
-                        ))}
+                        {
+                            data?.en_sourse.map((item, index) => (
+                                <li key={index}>
+                                    <Typography variant="subtitle1">{item.en_translation}</Typography>
+                                    <Typography variant="body2">Kanji: {item.kanji}</Typography>
+                                    <Typography variant="body2">Romanization: {item.romaji}</Typography>
+                                    <Typography variant="body2">Transliteration: {item.transliteration}</Typography>
+                                    <Button href={'/dictionary/' + item.idseq} variant="contained" color="primary" >Додати до словника</Button>
+                                </li>
+                            ))}
                     </ul>
                 </CardContent>
             </Card>
@@ -84,7 +87,11 @@ export default function Search({ params }) {
 
     return (
         <>
-            <TranslationCard data={data} />
+            {data ? (
+                <TranslationCard data={data} />
+            ) : (
+                <div>Loading...</div>
+            )}
         </>
     );
 }

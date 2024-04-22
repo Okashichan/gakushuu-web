@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('token')) {
-        setSetting([{ name: 'Profile', toUrl: `user/${localStorage.getItem('user_id')}` },
+        setSetting([{ name: 'Profile', toUrl: `user/${localStorage.getItem('uuid')}` },
         { name: 'Logout', }]);
         setAvatar(localStorage.getItem('avatar'));
       }

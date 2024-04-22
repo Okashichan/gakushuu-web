@@ -28,6 +28,7 @@ export default function AddToDictionary({ params }) {
 
                 const result = await response.json();
                 setData(result);
+                console.log(result);
             } catch (err) {
                 console.log(err.message || 'An error occurred');
             }
@@ -37,6 +38,7 @@ export default function AddToDictionary({ params }) {
     }, []);
 
     const submitData = async (data) => {
+        console.log(data);
         try {
             const response = await fetch(`${BASE_URL}/dictionary`, {
                 method: 'POST',
@@ -53,7 +55,7 @@ export default function AddToDictionary({ params }) {
 
             const result = await response.json();
             console.log(result);
-            window.location.href = `/search/${result.original}`;
+            window.location.href = `/search/${result.hiragana}`;
         } catch (err) {
             console.log(err.message || 'An error occurred');
         }
@@ -65,12 +67,11 @@ export default function AddToDictionary({ params }) {
             ...prevData,
             [name]: value,
         }));
-        console.log(data);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        submitData({ ...data, created_at: new Date().toISOString(), last_modified: new Date().toISOString(), author_id: localStorage.getItem('user_id') })
+        submitData({ ...data })
     };
 
     return (
@@ -88,9 +89,9 @@ export default function AddToDictionary({ params }) {
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Original"
-                                name="original"
-                                value={data.original}
+                                label="Kanji"
+                                name="kanji"
+                                value={data.kanji}
                                 onChange={handleChange}
                                 fullWidth
                                 required
@@ -117,7 +118,7 @@ export default function AddToDictionary({ params }) {
                                 style={{ marginBottom: 10 }}
                                 label="Romanization"
                                 name="romanization"
-                                value={data.romanization}
+                                value={data.romaji}
                                 onChange={handleChange}
                                 fullWidth
                                 required
@@ -139,17 +140,17 @@ export default function AddToDictionary({ params }) {
                                 onChange={handleChange}
                                 fullWidth
                             />
-                            <TextField
+                            {/* <TextField
                                 style={{ marginBottom: 10 }}
                                 label="Author ID"
                                 name="author_id"
                                 type="number"
-                                value={localStorage.getItem('user_id')}
+                                value={localStorage.getItem('uuid')}
                                 onChange={handleChange}
                                 fullWidth
                                 required
                                 disabled
-                            />
+                            /> */}
                             <Button type="submit" variant="contained" color="primary" >
                                 Додати
                             </Button>

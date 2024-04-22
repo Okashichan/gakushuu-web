@@ -1,4 +1,6 @@
 'use client';
+// import { cookies } from 'next/headers';
+
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import Avatar from '@mui/material/Avatar';
@@ -22,7 +24,7 @@ export default function SignIn() {
 
         const credentials = {
             username: event.target.username.value,
-            password: event.target.password_hash.value
+            password: event.target.password.value
         };
 
         const options = {
@@ -44,9 +46,9 @@ export default function SignIn() {
             const responseData = await response.json();
             console.log(responseData);
             localStorage.setItem('token', responseData.access_token);
-            localStorage.setItem('user_id', responseData.user_id);
-            localStorage.setItem('avatar', responseData.avatar);
-            router.push(`/user/${localStorage.getItem('user_id')}`);
+            localStorage.setItem('uuid', responseData.uuid);
+            localStorage.setItem('avatar_url', responseData.avatar_url);
+            router.push(`/user/${responseData.username}`);
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -84,11 +86,11 @@ export default function SignIn() {
                         margin="normal"
                         required
                         fullWidth
-                        name="password_hash"
+                        name="password"
                         label="Password"
-                        type="password_hash"
-                        id="password_hash"
-                        autoComplete="current-password_hash"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
                     />
                     <Button
                         type="submit"

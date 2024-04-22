@@ -21,11 +21,8 @@ export default function SignIn() {
 
         const data = {
             username: event.target.username.value,
-            password_hash: event.target.password_hash.value,
-            email: event.target.email.value,
-            avatar: 'http://127.0.0.1:8000/static/images/blank_avatar.jpg',
-            created_at: new Date().toISOString(),
-            role_id: 1
+            password: event.target.password.value,
+            email: event.target.email.value
         };
 
         const options = {
@@ -93,11 +90,11 @@ export default function SignIn() {
                         margin="normal"
                         required
                         fullWidth
-                        name="password_hash"
+                        name="password"
                         label="Password"
-                        type="password_hash"
-                        id="password_hash"
-                        autoComplete="current-password_hash"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
                     />
                     <Button
                         type="submit"
