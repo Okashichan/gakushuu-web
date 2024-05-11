@@ -1,30 +1,21 @@
-import Link from 'next/link';
-
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { pink } from '@mui/material/colors';
 
-
-import { Search, SearchIconWrapper, StyledInputBase } from './HeaderClientComponents';
+import HeaderUser from './HeaderUser';
+import HeaderSearch from './HeaderSearch';
 
 export default function Header() {
-
     const pages = ['Hiragana', 'Katakana', 'Transliteration'];
-    const settings = [{ name: 'Login', toUrl: '/auth/login' },
-    { name: 'Sign Up', toUrl: '/auth/signup' }]
-
 
     return (
         <AppBar sx={{ bgcolor: pink[300] }} position="static">
@@ -47,16 +38,7 @@ export default function Header() {
                     >
                         Gakushuu
                     </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-
+                    <HeaderSearch />
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -104,8 +86,7 @@ export default function Header() {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
-                    >
-                        Gakushuu
+                    > Gakushuu
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -118,34 +99,7 @@ export default function Header() {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src={"http://127.0.0.1:8000/static/images/blank_avatar.jpg"} />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name}>
-                                    {
-                                        setting.toUrl ? <Typography textAlign="center"><Link href={setting.toUrl} underline="none" color="inherit">{setting.name}</Link></Typography> : <Typography textAlign="center">{setting.name}</Typography>
-                                    }
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                    <HeaderUser />
                 </Toolbar>
             </Container>
         </AppBar>

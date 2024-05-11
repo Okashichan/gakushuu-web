@@ -1,6 +1,4 @@
 'use client';
-// import { cookies } from 'next/headers';
-
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import Avatar from '@mui/material/Avatar';
@@ -14,13 +12,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import { setCookie } from '@/utils/cookies';
+
+const url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
+
 export default function SignIn() {
     const router = useRouter();
-    const BASE_URL = 'http://127.0.0.1:8000'
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const url = `${BASE_URL}/token`;
 
         const credentials = {
             username: event.target.username.value,
@@ -44,18 +44,16 @@ export default function SignIn() {
             }
 
             const responseData = await response.json();
-            console.log(responseData);
-            localStorage.setItem('token', responseData.access_token);
-            localStorage.setItem('uuid', responseData.uuid);
-            localStorage.setItem('avatar_url', responseData.avatar_url);
-            router.push(`/user/${responseData.username}`);
+
+            setCookie('token', responseData.access_token);
+            router.push(`/profile`);
         } catch (error) {
             console.error('Error:', error.message);
         }
     };
 
     return (
-        <Container component="main" maxWidth="xs" style={{ background: '#f2f6fc' }}>
+        <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
                 sx={{
@@ -69,7 +67,7 @@ export default function SignIn() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Вхід
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField

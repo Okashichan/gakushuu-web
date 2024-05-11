@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import { getCookie } from '@/utils/cookies';
 
-const BASE_URL = 'http://127.0.0.1:8000';
-
+const url = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export default function AddToDictionary({ params }) {
     const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ export default function AddToDictionary({ params }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/dictionary/jamdict/${params.id}`, {
+                const response = await fetch(`${url}/dictionary/jamdict/${params.id}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
@@ -28,7 +28,6 @@ export default function AddToDictionary({ params }) {
 
                 const result = await response.json();
                 setData(result);
-                console.log(result);
             } catch (err) {
                 console.log(err.message || 'An error occurred');
             }
@@ -38,13 +37,12 @@ export default function AddToDictionary({ params }) {
     }, []);
 
     const submitData = async (data) => {
-        console.log(data);
         try {
-            const response = await fetch(`${BASE_URL}/dictionary`, {
+            const response = await fetch(`${url}/dictionary`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + await getCookie('token'),
                 },
                 body: JSON.stringify(data),
             });

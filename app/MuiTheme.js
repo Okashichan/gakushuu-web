@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google';
 import { createTheme, alpha, getContrastRatio } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 
-const pinkBase = pink[500];
+const pinkBase = pink[400];
 const pinkMain = alpha(pinkBase, 0.7);
 
 const roboto = Roboto({

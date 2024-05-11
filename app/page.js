@@ -1,13 +1,12 @@
-"use client";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { pink } from '@mui/material/colors';
 
 function Home() {
+
   return (
     <>
       <Box

@@ -9,15 +9,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+const url = `${process.env.NEXT_PUBLIC_API_URL}/user`;
+
 export default function SignIn() {
     const router = useRouter();
 
-    const BASE_URL = 'http://127.0.0.1:8000'
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        const url = `${BASE_URL}/user/`;
 
         const data = {
             username: event.target.username.value,
@@ -42,7 +40,7 @@ export default function SignIn() {
             }
 
             const responseData = await response.json();
-            console.log(responseData);
+
             router.push('/auth/login');
         } catch (error) {
             console.error('Error:', error.message);
@@ -50,7 +48,7 @@ export default function SignIn() {
     };
 
     return (
-        <Container component="main" maxWidth="xs" style={{ background: '#f2f6fc' }}>
+        <Container component="main" maxWidth="xs">
             <Box
                 sx={{
                     marginTop: 8,
@@ -63,7 +61,7 @@ export default function SignIn() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Реєстрація
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField

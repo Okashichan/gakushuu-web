@@ -24,11 +24,11 @@ const TranslationCard = ({ data }) => {
                     <ul>
                         {
                             data.ua_sourse.map((item, index) => (
-                                <li key={item.id}>
+                                <li key={index}>
                                     <Typography variant="subtitle1">{item.ua_translation}</Typography>
-                                    <Typography variant="body2">Kanji: {item.kanji}</Typography>
-                                    <Typography variant="body2">Romanization: {item.romaji}</Typography>
-                                    <Typography variant="body2">Transliteration: {item.transliteration}</Typography>
+                                    <Typography variant="body2">Канджі: {item.kanji} ({item.hiragana})</Typography>
+                                    <Typography variant="body2">Романізація: {item.romaji}</Typography>
+                                    <Typography variant="body2">Транслітерація: {item.transliteration}</Typography>
                                 </li>
                             ))}
                     </ul>
@@ -45,9 +45,8 @@ const TranslationCard = ({ data }) => {
                             data?.en_sourse.map((item, index) => (
                                 <li key={index}>
                                     <Typography variant="subtitle1">{item.en_translation}</Typography>
-                                    <Typography variant="body2">Kanji: {item.kanji}</Typography>
-                                    <Typography variant="body2">Romanization: {item.romaji}</Typography>
-                                    <Typography variant="body2">Transliteration: {item.transliteration}</Typography>
+                                    <Typography variant="body2">Канджі: {item.kanji ? item.kanji : "..."}</Typography>
+                                    <Typography variant="body2">Романізація: {item.romaji}</Typography>
                                     <Button href={'/dictionary/' + item.idseq} variant="contained" color="primary" >Додати до словника</Button>
                                 </li>
                             ))}
