@@ -5,13 +5,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import { pink } from '@mui/material/colors';
 
 function Home() {
   return (
     <>
       <Box
         sx={{
-          bgcolor: 'background.paper',
           pt: 8,
           pb: 6,
         }}
@@ -24,12 +24,11 @@ function Home() {
             color="text.primary"
             gutterBottom
           >
-            About Japanese Learning Portal
+            Про Японський навчальний портал
           </Typography>
           <Typography variant="h5" align="center" color="text.secondary" paragraph>
-            Gakushuu is a dictionary for Japanese learners. It is a
-            community-driven dictionary that uses the Japanese language
-            itself as a learning tool.
+            Gakushuu - це словник для тих, хто вивчає японську мову. Він
+            створений спільнотою, яка використовує японську як навчальний інструмент.
           </Typography>
           <Stack
             sx={{ pt: 4 }}
@@ -37,8 +36,8 @@ function Home() {
             spacing={2}
             justifyContent="center"
           >
-            <Button href='/' variant="contained">Go exploring</Button>
-            <Button href='/auth/signup' variant="outlined">Create account</Button>
+            <Button href='/' variant="contained" color='pink'>Вирушай на пошук</Button>
+            <Button href='/auth/signup' variant="outlined" color='pink'>Створити акаунт</Button>
           </Stack>
         </Container>
       </Box>
