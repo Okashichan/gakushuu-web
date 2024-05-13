@@ -7,16 +7,16 @@ import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { getCookie } from '@/utils/cookies';
+import { getCookie, setCookie } from '@/utils/cookies';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}/user/me`;
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 export default function UserEdit({ params }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const data = {
+        let data = {
             username: event.target.username?.value,
             password: event.target.password?.value
         };
@@ -26,6 +26,13 @@ export default function UserEdit({ params }) {
             return obj;
         };
 
+        data = filter_empty(data);
+
+        if (data.password === undefined) {
+            console.error('Password is required');
+            return;
+        }
+
         const options = {
             method: 'PATCH',
             headers: {
@@ -33,18 +40,32 @@ export default function UserEdit({ params }) {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + await getCookie('token')
             },
-            body: JSON.stringify(filter_empty(data))
+            body: JSON.stringify(data)
         };
 
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(`${url}/user/me`, options);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const responseData = await response.json();
-            console.log(responseData);
+
+            const resetToken = await fetch(`${url}/token`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ username: responseData.username, password: data.password }).toString(),
+            });
+
+            const resetTokenData = await resetToken.json();
+
+            await setCookie('token', resetTokenData.access_token);
+
+            window.location.href = '/user/' + responseData.username;
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -79,8 +100,8 @@ export default function UserEdit({ params }) {
                         autoFocus
                     />
                     <TextField
-                        margin="normal"
                         required
+                        margin="normal"
                         fullWidth
                         name="password"
                         label="Password"
