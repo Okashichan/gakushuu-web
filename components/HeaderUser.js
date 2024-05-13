@@ -132,7 +132,7 @@ export default function AccountMenu() {
                             <ListItemIcon>
                                 <Settings fontSize="small" />
                             </ListItemIcon>
-                            <StyledLink href="/settings">
+                            <StyledLink href={`/user/${user.username}/edit`}>
                                 Налаштування
                             </StyledLink>
                         </MenuItem>
