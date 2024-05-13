@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { getCookie } from '@/utils/cookies';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}`;
+const url = `${process.env.NEXT_PUBLIC_API_URL}/dictionary/jamdict`;
 
 export default function AddToDictionary({ params }) {
     const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ export default function AddToDictionary({ params }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${url}/dictionary/jamdict/${params.id}`, {
+                const response = await fetch(`${url}/${params.id}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',

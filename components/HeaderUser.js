@@ -125,7 +125,7 @@ export default function AccountMenu() {
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
                         <MenuItem>
-                            <Avatar src={"http://" + user.avatar_url} />&nbsp;<StyledLink href="/profile">Профіль</StyledLink>
+                            <Avatar src={"http://" + user.avatar_url} />&nbsp;<StyledLink href={`/user/${user.username}`}>Профіль</StyledLink>
                         </MenuItem>
                         <Divider />
                         <MenuItem>

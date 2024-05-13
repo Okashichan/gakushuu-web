@@ -1,36 +1,39 @@
 'use client';
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { getCookie } from '@/utils/cookies';
 
-import { setCookie } from '@/utils/cookies';
+const url = `${process.env.NEXT_PUBLIC_API_URL}/user/me`;
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
+export default function UserEdit({ params }) {
 
-export default function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const credentials = {
-            username: event.target.username.value,
-            password: event.target.password.value
+        const data = {
+            username: event.target.username?.value,
+            password: event.target.password?.value
+        };
+
+        const filter_empty = (obj) => {
+            Object.keys(obj).forEach(key => obj[key] === '' && delete obj[key]);
+            return obj;
         };
 
         const options = {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + await getCookie('token')
             },
-            body: new URLSearchParams(credentials).toString(),
+            body: JSON.stringify(filter_empty(data))
         };
 
         try {
@@ -41,13 +44,11 @@ export default function SignIn() {
             }
 
             const responseData = await response.json();
-
-            await setCookie('token', responseData.access_token);
-            window.location.href = "/";
+            console.log(responseData);
         } catch (error) {
             console.error('Error:', error.message);
         }
-    };
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -61,10 +62,10 @@ export default function SignIn() {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    <EditIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Вхід
+                    Редагування користувача {params.name}
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
@@ -93,22 +94,10 @@ export default function SignIn() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Редагувати
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </Box>
             </Box>
         </Container>
-    );
+    )
 }
