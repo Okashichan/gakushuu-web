@@ -16,7 +16,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import StyledLink from './StyledLink';
 import { getCookie, deleteCookie } from '@/utils/cookies';
-import { Login } from '@mui/icons-material';
+import { LibraryBooks, Login } from '@mui/icons-material';
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/user/me`;
 
@@ -136,6 +136,16 @@ export default function AccountMenu() {
                                 Налаштування
                             </StyledLink>
                         </MenuItem>
+                        {user.role.name === 'linguist' ? (
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <LibraryBooks fontSize="small" />
+                                </ListItemIcon>
+                                <StyledLink href={`/dictionary/edit`}>
+                                    Словник
+                                </StyledLink>
+                            </MenuItem>
+                        ) : undefined}
                         <MenuItem onClick={logout}>
                             <ListItemIcon>
                                 <Logout fontSize="small" />
