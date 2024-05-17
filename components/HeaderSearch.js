@@ -14,6 +14,7 @@ export default function HeaderSearch() {
         if (search.trim() === '') {
             return;
         }
+        e.target.value = '';
         router.push(`/search/${search}`);
     }
 
