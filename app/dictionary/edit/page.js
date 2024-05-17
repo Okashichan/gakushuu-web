@@ -22,7 +22,7 @@ export default async function DictionaryEdit({ params }) {
     return (
         <Container component="main" maxWidth="100%" sx={{ padding: "5px" }}>
             <Suspense fallback={<div>Loading...</div>}>
-                <Table rows={dictionary}></Table>
+                <Table rowsInit={dictionary}></Table>
             </Suspense>
         </Container>
     )
