@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Container } from '@mui/material';
 import Table from '@/components/Table';
 // import { getCookie } from '@/utils/cookies';
+export const fetchCache = 'only-no-store';
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/dictionary/all`;
 
@@ -24,6 +25,5 @@ export default async function DictionaryEdit({ params }) {
                 <Table rows={dictionary}></Table>
             </Suspense>
         </Container>
-
     )
 }

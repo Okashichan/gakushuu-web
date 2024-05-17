@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { getCookie } from '@/utils/cookies';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}/dictionary/jamdict`;
+const url = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export default function AddToDictionary({ params }) {
     const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ export default function AddToDictionary({ params }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${url}/${params.id}`, {
+                const response = await fetch(`${url}/dictionary/jamdict/${params.id}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
@@ -130,25 +130,6 @@ export default function AddToDictionary({ params }) {
                                 fullWidth
                                 required
                             />
-                            <TextField
-                                style={{ marginBottom: 10 }}
-                                label="Comment"
-                                name="comment"
-                                value={data.comment}
-                                onChange={handleChange}
-                                fullWidth
-                            />
-                            {/* <TextField
-                                style={{ marginBottom: 10 }}
-                                label="Author ID"
-                                name="author_id"
-                                type="number"
-                                value={localStorage.getItem('uuid')}
-                                onChange={handleChange}
-                                fullWidth
-                                required
-                                disabled
-                            /> */}
                             <Button type="submit" variant="contained" color="primary" >
                                 Додати
                             </Button>
