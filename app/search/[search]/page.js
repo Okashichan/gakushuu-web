@@ -1,96 +1,22 @@
-"use client";
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Divider from '@mui/material/Divider';
+import { Suspense } from 'react';
+import DictionarySearch from '@/components/DictionarySearch';
 
-const BASE_URL = 'http://127.0.0.1:8000';
+import { getCurrentUser } from '@/utils/user';
 
-const TranslationCard = ({ data }) => {
+export const fetchCache = 'only-no-store';
 
-    console.log(data);
+async function getUser() {
+    const user = await getCurrentUser();
+    return user;
+}
 
-    return (
-        <Box>
-            <Card variant="outlined">
-                <CardContent>
-                    <Typography variant="h3" gutterBottom>
-                        Український словник
-                    </Typography>
-                    <ul>
-                        {
-                            data.ua_sourse.map((item, index) => (
-                                <li key={index}>
-                                    <Typography variant="subtitle1">{item.ua_translation}</Typography>
-                                    <Typography variant="body2">Канджі: {item.kanji} ({item.hiragana})</Typography>
-                                    <Typography variant="body2">Романізація: {item.romaji}</Typography>
-                                    <Typography variant="body2">Транслітерація: {item.transliteration}</Typography>
-                                </li>
-                            ))}
-                    </ul>
-                </CardContent>
-            </Card>
-            <Divider variant="inset" />
-            <Card variant="outlined">
-                <CardContent>
-                    <Typography variant="h3" gutterBottom>
-                        Англійський словник
-                    </Typography>
-                    <ul>
-                        {
-                            data?.en_sourse.map((item, index) => (
-                                <li key={index}>
-                                    <Typography variant="subtitle1">{item.en_translation}</Typography>
-                                    <Typography variant="body2">Канджі: {item.kanji ? item.kanji : "..."}</Typography>
-                                    <Typography variant="body2">Романізація: {item.romaji}</Typography>
-                                    <Button href={'/dictionary/' + item.idseq} variant="contained" color="primary" >Додати до словника</Button>
-                                </li>
-                            ))}
-                    </ul>
-                </CardContent>
-            </Card>
-        </Box >
-    );
-};
+export default async function Search({ params }) {
 
-export default function Search({ params }) {
-    const [data, setData] = useState(null);
-
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`${BASE_URL}/dictionary/search/${params.search}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const result = await response.json();
-            setData(result);
-        } catch (err) {
-            console.log(err.message || 'An error occurred');
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const user = await getUser();
 
     return (
-        <>
-            {data ? (
-                <TranslationCard data={data} />
-            ) : (
-                <div>Loading...</div>
-            )}
-        </>
+        <Suspense>
+            <DictionarySearch currentUser={user} search={params.search} />
+        </Suspense>
     );
 }

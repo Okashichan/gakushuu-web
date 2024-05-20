@@ -4,19 +4,20 @@ import {
     DataGrid,
     GridToolbar,
     GridActionsCellItem,
-    GridRowEditStopReasons,
+    GridRowEditStopReasons
 } from '@mui/x-data-grid';
 import {
     Edit as EditIcon,
     Save as SaveIcon,
     Cancel as CancelIcon
 } from '@mui/icons-material';
-import { Box, Button } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { ukUA } from '@mui/x-data-grid/locales';
 import { getCookie } from '@/utils/cookies';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation'
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/dictionary/entry`;
 
@@ -65,7 +66,7 @@ function DeleteButton({ uuid }) {
 }
 
 export default function Table({ rowsInit }) {
-
+    const searchParams = useSearchParams();
     const router = useRouter();
     const [rows, setRows] = useState([]);
     const [rowModesModel, setRowModesModel] = useState({});
@@ -206,7 +207,12 @@ export default function Table({ rowsInit }) {
                         columnVisibilityModel: {
                             uuid: false,
                         }
-                    }
+                    },
+                    filter: {
+                        filterModel: {
+                            items: [{ field: 'idseq', operator: 'equals', value: searchParams.get('idseq') }]
+                        },
+                    },
                 }}
                 pageSizeOptions={[10, 15]}
                 editMode="row"

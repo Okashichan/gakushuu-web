@@ -1,5 +1,5 @@
 "use client";
-import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,6 +10,7 @@ import { getCookie } from '@/utils/cookies';
 const url = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export default function AddToDictionary({ params }) {
+    const router = useRouter();
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -52,8 +53,7 @@ export default function AddToDictionary({ params }) {
             }
 
             const result = await response.json();
-            console.log(result);
-            window.location.href = `/search/${result.hiragana}`;
+            router.push(`/search/${result.kanji}`);
         } catch (err) {
             console.log(err.message || 'An error occurred');
         }
@@ -96,12 +96,44 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
+                                label="Hiragana"
+                                name="hiragana"
+                                value={data.hiragana}
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            />
+                            <TextField
+                                style={{ marginBottom: 10 }}
+                                label="Katakana"
+                                name="katakana"
+                                value={data.katakana}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                            <TextField
+                                style={{ marginBottom: 10 }}
+                                label="Kunyomi"
+                                name="kunyomi"
+                                value={data.kunyomi}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                            <TextField
+                                style={{ marginBottom: 10 }}
+                                label="Onyomi"
+                                name="onyomi"
+                                value={data.onyomi}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                            <TextField
+                                style={{ marginBottom: 10 }}
                                 label="English Translation"
                                 name="en_translation"
                                 value={data.en_translation}
                                 onChange={handleChange}
                                 fullWidth
-                                required
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}

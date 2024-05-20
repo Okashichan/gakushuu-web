@@ -57,7 +57,6 @@ export default function AccountMenu() {
             }
 
             const responseData = await response.json();
-            console.log(responseData);
             setUser(responseData);
         } catch (error) {
             console.error('Error:', error.message);
