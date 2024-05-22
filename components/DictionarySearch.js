@@ -18,10 +18,38 @@ import {
     Collapse,
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { getCookie } from '@/utils/cookies';
+import { useNotification } from '../context/NotificationContext';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 const KanjiCard = ({ entry, currentUser, ua }) => {
+    const showNotification = useNotification();
+    const [collection, setCollection] = useState(currentUser?.collections[0] ? currentUser?.collections[0].uuid : 'none');
+
+    const handleCollectionChange = (e) => {
+        setCollection(e.target.value);
+    };
+
+    const submitWordToCollection = async (wordUuid) => {
+        try {
+            const response = await fetch(`${url}/collection/add/${collection}?word_uuid=${wordUuid}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + await getCookie('token'),
+                }
+            });
+
+            if (!response.ok) {
+                showNotification('Помилка додавання до колекції', 'error');
+            } else {
+                showNotification('Успішно додано до колекції', 'success');
+            }
+        } catch (err) {
+            console.log(err.message || 'An error occurred');
+        }
+    }
 
     return (
         <Paper sx={{ p: 2, mb: 2 }}>
@@ -47,12 +75,13 @@ const KanjiCard = ({ entry, currentUser, ua }) => {
                                 labelId="collection-label"
                                 id="collection-select"
                                 label="Collection"
-                                defaultValue=""
+                                value={collection}
+                                onChange={handleCollectionChange}
                             >
-                                <MenuItem value=""><em>None</em></MenuItem>
-                                <MenuItem value="Collection 1">Collection 1</MenuItem>
-                                <MenuItem value="Collection 2">Collection 2</MenuItem>
-                                <MenuItem value="Collection 3">Collection 3</MenuItem>
+                                <MenuItem value="none"><em>None</em></MenuItem>
+                                {currentUser?.collections.map((collection, index) => (
+                                    <MenuItem key={index} value={collection.uuid}>{collection.name}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl> : undefined}
                         <Box
@@ -62,7 +91,7 @@ const KanjiCard = ({ entry, currentUser, ua }) => {
                                 gap: 1,
                             }}
                         >
-                            {currentUser ? <Button variant="contained" color="secondary" href="#todo">Додати до колекції</Button> : undefined}
+                            {currentUser ? <Button variant="contained" color="secondary" onClick={() => submitWordToCollection(entry.uuid)}>Додати до колекції</Button> : undefined}
                             {currentUser?.role.name === 'linguist' ? <Button variant="contained" color="primary" href={`/dictionary/edit?idseq=${entry.idseq}`}>Редагувати</Button> : undefined}
                         </Box>
                     </Box>
