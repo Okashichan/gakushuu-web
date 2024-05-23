@@ -10,6 +10,7 @@ import {
     Edit
 } from '@mui/icons-material';
 import { getCookie } from '@/utils/cookies';
+import { Link } from '@mui/material';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -251,9 +252,13 @@ export default function UserPage({ user }) {
                                     <IconButton onClick={() => toggleCollection(collection.uuid)}>
                                         {openCollections[collection.uuid] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
-                                    <IconButton color="primary">
-                                        <ExportIcon />
-                                    </IconButton>
+                                    {
+                                        collection.words.length !== 0 ? <Link href={`${url}/collection/download/${collection.uuid}`} target='_blank'>
+                                            <IconButton color="primary">
+                                                <ExportIcon />
+                                            </IconButton>
+                                        </Link> : undefined
+                                    }
                                     {user.current ? (
                                         <>
                                             <IconButton color="secondary" onClick={() => deteleCollection(collection.uuid)}>
