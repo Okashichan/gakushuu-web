@@ -1,6 +1,7 @@
 'use server';
 
 import { getCookie } from '@/utils/cookies';
+import { use } from 'react';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,6 +23,28 @@ export async function getCurrentUser() {
 
     try {
         const response = await fetch(`${url}/user/me`, options);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
+export async function getByUserName(username) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    };
+
+    try {
+        const response = await fetch(`${url}/user/${username}`, options);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
