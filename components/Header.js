@@ -15,7 +15,7 @@ import HeaderUser from './HeaderUser';
 import HeaderSearch from './HeaderSearch';
 
 export default function Header() {
-    const pages = ['Hiragana', 'Katakana', 'Transliteration'];
+    const pages = [{ name: 'Конфігуроване тестування', url: '/quiz' }, { name: 'Хіраґана', url: '/quiz/hiragana' }, { name: 'Катакана', url: '/quiz/katakana' }, { name: 'Транслітерація', url: '/' }];
 
     return (
         <AppBar sx={{ bgcolor: pink[300] }} position="static">
@@ -65,8 +65,8 @@ export default function Header() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem key={page.name}>
+                                    <Typography textAlign="center">{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -89,12 +89,13 @@ export default function Header() {
                     > Gakushuu
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {pages.map((page, index) => (
                             <Button
-                                key={page}
+                                key={index}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
+                                href={page.url}
                             >
-                                {page}
+                                {page.name}
                             </Button>
                         ))}
                     </Box>

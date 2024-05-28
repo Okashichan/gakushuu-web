@@ -35,7 +35,7 @@ function Home() {
             spacing={2}
             justifyContent="center"
           >
-            <Button href='/' variant="contained" color='pink'>Вирушай на пошук</Button>
+            <Button href='/search/学習' variant="contained" color='pink'>Вирушай на пошук</Button>
             <Button href='/auth/signup' variant="outlined" color='pink'>Створити акаунт</Button>
           </Stack>
         </Container>

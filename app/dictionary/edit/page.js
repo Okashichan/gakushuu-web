@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { Container } from '@mui/material';
 import Table from '@/components/Table';
-// import { getCookie } from '@/utils/cookies';
 export const fetchCache = 'only-no-store';
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/dictionary/all`;
@@ -12,12 +11,9 @@ async function getDictionary() {
     return data;
 }
 
-export default async function DictionaryEdit({ params }) {
+export default async function DictionaryEdit() {
 
     const dictionary = await getDictionary();
-
-    // This is possible
-    // console.log(await getCookie('token'));
 
     return (
         <Container component="main" maxWidth="100%" sx={{ padding: "5px" }}>
