@@ -1,29 +1,26 @@
 "use client";
 
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import StyledLink from './StyledLink';
-import { getCookie, deleteCookie } from '@/utils/cookies';
+import {
+    Box,
+    Avatar,
+    Menu,
+    MenuItem,
+    ListItemIcon,
+    Divider,
+    IconButton,
+    Typography,
+    Tooltip
+} from '@mui/material';
+import { Settings, Logout } from '@mui/icons-material';
+import { deleteCookie } from '@/utils/cookies';
 import { LibraryBooks, Login, Analytics } from '@mui/icons-material';
+import StyledLink from './StyledLink';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}/user/me`;
-
-export default function AccountMenu() {
+export default function HeaderUser({ user }) {
     const router = useRouter();
-    const [user, setUser] = useState(null);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleClose = () => {
@@ -36,36 +33,9 @@ export default function AccountMenu() {
 
     const logout = () => {
         deleteCookie('token').then(() => {
-            setUser(null);
             router.push('/');
         });
     };
-
-    const getUserData = async () => {
-        const options = {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + await getCookie('token')
-            },
-        };
-
-        try {
-            const response = await fetch(url, options);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            setUser(responseData);
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-
-    useEffect(() => {
-        getCookie('token').then((token) => token ? getUserData() : setUser(null));
-    }, []);
 
     return (
         <>

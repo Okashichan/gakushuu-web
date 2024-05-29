@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { pink } from '@mui/material/colors';
 
-import HeaderUser from './HeaderUser';
+import ServerHeaderUser from './ServerHeaderUser';
 import HeaderSearch from './HeaderSearch';
 
 export default function Header() {
@@ -100,7 +100,7 @@ export default function Header() {
                         ))}
                     </Box>
 
-                    <HeaderUser />
+                    <ServerHeaderUser />
                 </Toolbar>
             </Container>
         </AppBar>
