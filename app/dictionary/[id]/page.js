@@ -53,7 +53,7 @@ export default function AddToDictionary({ params }) {
             }
 
             const result = await response.json();
-            router.push(`/search/${result.kanji}`);
+            router.push(`/search/${result.kanji ? result.kanji : result.hiragana}`);
         } catch (err) {
             console.log(err.message || 'An error occurred');
         }
@@ -92,7 +92,6 @@ export default function AddToDictionary({ params }) {
                                 value={data.kanji}
                                 onChange={handleChange}
                                 fullWidth
-                                required
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}

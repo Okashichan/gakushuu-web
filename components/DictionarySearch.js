@@ -55,7 +55,7 @@ const KanjiCard = ({ entry, currentUser, ua }) => {
         <Paper sx={{ p: 2, mb: 2 }}>
             <Grid container spacing={1}>
                 <Grid item xs={1}>
-                    <StyledLink href={`/search/${entry.kanji}`}><Typography variant="h2">{entry.kanji}</Typography></StyledLink>
+                    <StyledLink href={`/search/${entry.kanji}`}><Typography variant="h2">{entry.kanji ? entry.kanji : entry.hiragana}</Typography></StyledLink>
                     <span>{entry.idseq}</span>
                 </Grid>
                 <Grid item xs={6}>
