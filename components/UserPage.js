@@ -173,7 +173,7 @@ export default function UserPage({ user }) {
             const data = {
                 name: newCollection.name,
                 description: newCollection.description,
-                is_public: newCollection.is_public
+                is_public: newCollection?.is_public ? newCollection.is_public : false
             };
 
             options.body = JSON.stringify(data);
