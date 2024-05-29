@@ -2,6 +2,10 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Container, Typography, RadioGroup, FormControlLabel, Radio, Button, Paper, Box } from '@mui/material';
+import { getCookie } from '@/utils/cookies';
+import { useNotification } from '@/context/NotificationContext';
+
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Quiz({ quiz, query }) {
     const pathname = usePathname();
@@ -9,6 +13,7 @@ export default function Quiz({ quiz, query }) {
     const [answers, setAnswers] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
     const [isFinished, setIsFinished] = useState(false);
+    const showNotification = useNotification();
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
@@ -27,22 +32,45 @@ export default function Quiz({ quiz, query }) {
         }
     };
 
-    const handleFinishQuiz = () => {
+    const handleFinishQuiz = async () => {
         if (selectedOption) {
             const isCorrect = selectedOption === quiz[currentQuestionIndex][1];
             setAnswers([...answers, { question: quiz[currentQuestionIndex][0], selected: selectedOption, correct: quiz[currentQuestionIndex][1], isCorrect }]);
         }
         setIsFinished(true);
 
-        console.log('Quiz results:', answers);
-
         const answersPoints = answers.map((answer) => {
             return {
-                answer: answer.question, correct: answer.isCorrect ? 1 : -1
+                answer: answer.question, correct: answer.isCorrect
             }
         });
 
-        console.log(answersPoints);
+        const queryType = query.includes('basic=true')
+            ? 'basic' : query.includes('combinations=true')
+                ? 'combinations' : query.includes('kuten=true')
+                    ? 'kuten' : 'all';
+        const alphabet = pathname.includes('hiragana') ? 'hiragana' : 'katakana';
+
+        try {
+            const response = await fetch(`${url}/quiz/${alphabet}_stats?type=${queryType}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + await getCookie('token'),
+                },
+                body: JSON.stringify(answersPoints)
+            });
+
+            if (!response.ok) {
+                console.log('Error', response.status);
+                showNotification('Помилка збереження результатів тестування', 'error');
+            } else {
+                showNotification('Результати тестування успішно збережено', 'success');
+            }
+        } catch (err) {
+            console.log(err.message || 'An error occurred');
+        }
+
     };
 
     const currentQuestion = quiz[currentQuestionIndex];

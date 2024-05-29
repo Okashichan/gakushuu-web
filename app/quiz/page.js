@@ -32,8 +32,8 @@ const QuizPage = () => {
                             <RadioGroup name="quizMode" value={quizMode} onChange={(e) => setQuizMode(e.target.value)}>
                                 <FormControlLabel value="basic" control={<Radio />} label="Базові" />
                                 <FormControlLabel value="combinations" control={<Radio />} label="Комбінації" />
-                                <FormControlLabel value="kuten" control={<Radio />} label="Кутен" />
-                                <FormControlLabel value="kuten_combinations" control={<Radio />} label="Кобмінації кутен" />
+                                <FormControlLabel value="kuten" control={<Radio />} label="Дакутен" />
+                                <FormControlLabel value="kuten_combinations" control={<Radio />} label="Кобмінації + дакутен" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>

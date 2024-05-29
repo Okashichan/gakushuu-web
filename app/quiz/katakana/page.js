@@ -8,7 +8,7 @@ const url = `${process.env.NEXT_PUBLIC_API_URL}/quiz/katakana`;
 
 async function getKatakanaQuiz({ params }) {
     const query = new URLSearchParams(params).toString();
-    const urlWithQuery = `${url}?${query}`;
+    const urlWithQuery = query.length > 0 ? `${url}?${query}` : `${url}?basic=false&size=40`;
     const res = await fetch(urlWithQuery);
     const data = await res.json();
     return {

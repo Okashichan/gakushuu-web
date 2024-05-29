@@ -16,7 +16,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import StyledLink from './StyledLink';
 import { getCookie, deleteCookie } from '@/utils/cookies';
-import { LibraryBooks, Login } from '@mui/icons-material';
+import { LibraryBooks, Login, Analytics } from '@mui/icons-material';
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/user/me`;
 
@@ -133,6 +133,14 @@ export default function AccountMenu() {
                             </ListItemIcon>
                             <StyledLink href={`/user/${user.username}/edit`}>
                                 Налаштування
+                            </StyledLink>
+                        </MenuItem>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <Analytics fontSize="small" />
+                            </ListItemIcon>
+                            <StyledLink href={`/user/${user.username}/stats`}>
+                                Статистика
                             </StyledLink>
                         </MenuItem>
                         {user.role.name === 'linguist' ? (
