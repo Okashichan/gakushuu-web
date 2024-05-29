@@ -11,6 +11,7 @@ import {
 } from '@mui/icons-material';
 import { getCookie } from '@/utils/cookies';
 import { Link } from '@mui/material';
+import { useNotification } from '@/context/NotificationContext';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -48,6 +49,7 @@ export default function UserPage({ user }) {
         is_public: false
     });
     const router = useRouter();
+    const showNotification = useNotification();
 
     const toggleCollection = (uuid) => {
         setOpenCollections(prevState => ({
@@ -71,6 +73,7 @@ export default function UserPage({ user }) {
 
         try {
             fetch(`${url}/collection/${uuid}`, options);
+            showNotification('Видимість колекції змінено', 'success');
             router.refresh();
         } catch (error) {
             console.error('Error:', error.message);
@@ -122,6 +125,7 @@ export default function UserPage({ user }) {
 
         try {
             await fetch(`${url}/collection/${uuid}`, options);
+            showNotification('Колекцію видалено', 'success');
             router.refresh();
         } catch (error) {
             console.error('Error:', error.message);
@@ -140,6 +144,7 @@ export default function UserPage({ user }) {
 
         try {
             await fetch(`${url}/collection/remove/${collectionUuid}?word_uuid=${wordUuid}`, options);
+            showNotification('Слово видалено', 'success');
             router.refresh();
         } catch (error) {
             console.error('Error:', error.message);
@@ -179,6 +184,7 @@ export default function UserPage({ user }) {
             options.body = JSON.stringify(data);
 
             await fetch(newUrl, options);
+            showNotification(newCollection?.uuid ? 'Колекцію оновлено' : 'Колекцію створено', 'success');
             router.refresh();
         } catch (error) {
             console.error('Error:', error.message);
@@ -211,10 +217,36 @@ export default function UserPage({ user }) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
+            showNotification('Аватар змінено', 'success');
             router.refresh();
         } catch (error) {
             console.error('Error:', error.message);
         }
+    };
+
+    const changeUserRole = async (email) => {
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + await getCookie('token'),
+            }
+        }
+
+        try {
+            const response = await fetch(`${url}/role/${email}`, options);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            showNotification('Роль змінено', 'success');
+            router.refresh();
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+
     };
 
     return (
@@ -239,6 +271,12 @@ export default function UserPage({ user }) {
                             <VisuallyHiddenInput type="file" onInput={uploadAvatar} />
                         </Button>
                     </Box>
+                ) : undefined}
+
+                {user?.currentUser?.role.name === 'admin' && user.role.name !== 'linguist' ? (
+                    <Button color="primary" onClick={() => changeUserRole(user.email)}>
+                        Призначити мовознавцем
+                    </Button>
                 ) : undefined}
 
                 {user.collections?.map(collection => (
@@ -291,7 +329,7 @@ export default function UserPage({ user }) {
                                                     </IconButton> : undefined
                                                 }>
                                                 <ListItemText
-                                                    primary={`${word.kanji} (${word.hiragana} - ${word.romaji})`}
+                                                    primary={`${word.kanji ? word.kanji : ''} (${word.hiragana} - ${word.romaji})`}
                                                     secondary={`Переклад: ${word.ua_translation}`}
                                                 />
                                             </ListItem>
@@ -305,16 +343,16 @@ export default function UserPage({ user }) {
             </Box>
 
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Add New Collection</DialogTitle>
+                <DialogTitle>Додати нову колекцію</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please fill out the form below to create a new collection.
+                        Будь ласка, заповніть форму нижче, щоб створити нову колекцію.
                     </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         name="name"
-                        label="Collection Name"
+                        label="Назва колекції"
                         fullWidth
                         variant="outlined"
                         value={newCollection?.name ? newCollection.name : ''}
@@ -323,7 +361,7 @@ export default function UserPage({ user }) {
                     <TextField
                         margin="dense"
                         name="description"
-                        label="Description"
+                        label="Опис"
                         fullWidth
                         variant="outlined"
                         value={newCollection?.description ? newCollection.description : ''}
@@ -338,15 +376,15 @@ export default function UserPage({ user }) {
                                 color="primary"
                             />
                         }
-                        label="Public"
+                        label="Публічна"
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleDialogClose} color="primary">
-                        Cancel
+                        Відмінити
                     </Button>
                     <Button onClick={handleFormSubmit} color="primary">
-                        Create
+                        Створити
                     </Button>
                 </DialogActions>
             </Dialog>
