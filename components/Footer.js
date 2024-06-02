@@ -15,7 +15,7 @@ export default function Footer() {
                 Made with ❤️ by Okashi
             </Typography>
             <Typography variant="body2" align="center">
-                {'Copyright © '}
+                {'Авторські права © '}
                 <Link color="inherit" href="https://gakushuu.pp.ua/">
                     gakushuu
                 </Link>{' '}
