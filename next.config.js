@@ -1,5 +1,5 @@
 module.exports = {
     env: {
-        NEXT_PUBLIC_API_URL: 'http://api.gakushuu.pp.ua:8008',
+        NEXT_PUBLIC_API_URL: 'https://api.gakushuu.pp.ua',
     },
 }
