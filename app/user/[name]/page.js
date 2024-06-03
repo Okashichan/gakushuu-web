@@ -23,5 +23,6 @@ export default async function User({ params }) {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <UserPage user={user} />
-        </Suspense>)
+        </Suspense>
+    );
 }

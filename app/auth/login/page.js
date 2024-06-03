@@ -1,20 +1,16 @@
 'use client';
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { Avatar, Button, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
+import { useNotification } from '@/context/NotificationContext';
 import { setCookie } from '@/utils/cookies';
+import { useRouter } from 'next/navigation';
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
 
 export default function SignIn() {
+    const router = useRouter();
+    const showNotification = useNotification();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -36,13 +32,15 @@ export default function SignIn() {
             const response = await fetch(url, options);
 
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                showNotification('Помилка входу. Перевірте правильність введених даних.', 'error');
+                return;
             }
 
             const responseData = await response.json();
 
             await setCookie('token', responseData.access_token);
-            window.location.href = "/";
+            router.push('/');
+            showNotification('Успішний вхід', 'success');
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -70,7 +68,7 @@ export default function SignIn() {
                         required
                         fullWidth
                         id="username"
-                        label="Your username"
+                        label="Ваш нікнейм"
                         name="username"
                         autoComplete="username"
                         autoFocus
@@ -80,7 +78,7 @@ export default function SignIn() {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Пароль"
                         type="password"
                         id="password"
                         autoComplete="current-password"
@@ -91,12 +89,12 @@ export default function SignIn() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Увійти
                     </Button>
                     <Grid container>
                         <Grid item>
                             <Link href="/auth/signup" variant="body2">
-                                {"Don't have an account? Sign Up"}
+                                {"Не маєте облікового запису? Зареєструватися"}
                             </Link>
                         </Grid>
                     </Grid>

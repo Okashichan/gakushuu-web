@@ -90,7 +90,7 @@ export default function Quiz({ quiz, query }) {
                             <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
                         ))}
                     </RadioGroup>
-                    <Button variant="contained" color="primary" onClick={handleNextQuestion} disabled={!selectedOption}>
+                    <Button variant="contained" color="secondary" onClick={handleNextQuestion} disabled={!selectedOption}>
                         {currentQuestionIndex < quiz.length - 1 ? 'Далі' : 'Завершити'}
                     </Button>
                 </>
@@ -104,7 +104,7 @@ export default function Quiz({ quiz, query }) {
                             </Typography>
                         </Box>
                     ))}
-                    <Button variant="contained" color="primary" href={`${pathname}?${query}`}>Спробувати ще раз!</Button>
+                    <Button variant="contained" color="success" href={`${pathname}?${query}`}>Спробувати ще раз!</Button>
                 </>
             )}
         </Container>

@@ -7,11 +7,15 @@ import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { getCookie, setCookie } from '@/utils/cookies';
+import { getCookie, setCookie, deleteCookie } from '@/utils/cookies';
+import { useNotification } from '@/context/NotificationContext';
+import { useRouter } from 'next/navigation';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 export default function UserEdit({ params }) {
+    const router = useRouter();
+    const showNotification = useNotification();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -61,11 +65,43 @@ export default function UserEdit({ params }) {
                 body: new URLSearchParams({ username: responseData.username, password: data.password }).toString(),
             });
 
+            if (!resetToken.ok) {
+                showNotification('Помилка редагування', 'error');
+                return;
+            }
+
             const resetTokenData = await resetToken.json();
 
             await setCookie('token', resetTokenData.access_token);
 
-            window.location.href = '/user/' + responseData.username;
+            router.push(`/user/${responseData.username}`);
+            showNotification('Успішне редагування', 'success');
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    const handleDelete = async () => {
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + await getCookie('token')
+            }
+        };
+
+        try {
+            const response = await fetch(`${url}/user/me`, options);
+
+            if (!response.ok) {
+                showNotification('Помилка видалення акаунту', 'error');
+            }
+
+            await deleteCookie('token');
+
+            router.push('/');
+            showNotification('Акаунт видалено', 'success');
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -119,6 +155,16 @@ export default function UserEdit({ params }) {
                     </Button>
                 </Box>
             </Box>
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color={'error'}
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleDelete}
+            >
+                Видалити акаунт
+            </Button>
         </Container>
     )
 }

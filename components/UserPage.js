@@ -18,13 +18,26 @@ const url = process.env.NEXT_PUBLIC_API_URL;
 const getRoleIcon = (roleName) => {
     switch (roleName) {
         case 'admin':
-            return <WorkIcon />;
-        case 'editor':
-            return <PersonIcon />;
+            return (
+                <>
+                    <WorkIcon />
+                    <Typography variant="body2" color="textSecondary" ml={1}>Адміністратор</Typography>
+                </>
+            );
         case 'linguist':
-            return <SchoolIcon />;
+            return (
+                <>
+                    <SchoolIcon />
+                    <Typography variant="body2" color="textSecondary" ml={1}>Мовознавець</Typography>
+                </>
+            );
         default:
-            return <PersonIcon />;
+            return (
+                <>
+                    <PersonIcon />
+                    <Typography variant="body2" color="textSecondary" ml={1}>Учень</Typography>
+                </>
+            );
     }
 };
 
@@ -257,9 +270,9 @@ export default function UserPage({ user }) {
                 <Typography variant="body1">{user.email}</Typography>
                 <Box display="flex" alignItems="center" mt={1}>
                     {getRoleIcon(user.role.name)}
-                    <Typography variant="body2" color="textSecondary" ml={1}>{user.role.name}</Typography>
+
                 </Box>
-                <Typography variant="body2" color="textSecondary" mt={1}>Joined on: {new Date(user.created_at).toLocaleDateString()}</Typography>
+                <Typography variant="body2" color="textSecondary" mt={1}>Приєднався: {new Date(user.created_at).toLocaleDateString()}</Typography>
 
                 {user.current ? (
                     <Box display="flex" justifyContent="center" mt={2} gap={2}>

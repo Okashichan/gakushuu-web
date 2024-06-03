@@ -40,7 +40,7 @@ function ApproveButton({ uuid }) {
         router.refresh();
     }
 
-    return <Button onClick={handleApprove}>Approve</Button>
+    return <Button onClick={handleApprove} color={'success'}>Схвалити</Button>
 }
 
 function DeleteButton({ uuid }) {
@@ -62,7 +62,7 @@ function DeleteButton({ uuid }) {
         router.refresh();
     }
 
-    return <Button onClick={handleDelete}>Delete</Button>
+    return <Button onClick={handleDelete} color={'error'}>Видалити</Button>
 }
 
 export default function Table({ rowsInit }) {
@@ -134,20 +134,20 @@ export default function Table({ rowsInit }) {
 
     const columns = [
         { field: 'idseq', headerName: 'IDSEQ', width: 80 },
-        { field: 'kanji', headerName: 'Kanji', editable: true, width: 70 },
-        { field: 'hiragana', headerName: 'Hiragana', editable: true, width: 100 },
-        { field: 'katakana', headerName: 'Katakana', editable: true, width: 100 },
-        { field: 'romaji', headerName: 'Romaji', editable: true, width: 130 },
-        { field: 'transliteration', headerName: 'Transliteration', editable: true, width: 130 },
-        { field: 'kunyomi', headerName: 'Kunyomi', editable: true, width: 130 },
-        { field: 'onyomi', headerName: 'Onyomi', editable: true, width: 130 },
-        { field: 'ua_translation', headerName: 'Ukrainian Translation', editable: true, width: 200 },
-        { field: 'en_translation', headerName: 'English Translation', editable: true, width: 200 },
-        { field: 'created_by', headerName: 'Submitter', width: 130, renderCell: (params) => <Link href={`/user/${params.row.created_by.username}`}>{params.row.created_by.username}</Link> },
+        { field: 'kanji', headerName: 'Канджі', editable: true, width: 70 },
+        { field: 'hiragana', headerName: 'Хіраґана', editable: true, width: 100 },
+        { field: 'katakana', headerName: 'Катакана', editable: true, width: 100 },
+        { field: 'romaji', headerName: 'Ромаджі', editable: true, width: 130 },
+        { field: 'transliteration', headerName: 'Транслітерація', editable: true, width: 130 },
+        { field: 'kunyomi', headerName: 'Кунйомі', editable: true, width: 130 },
+        { field: 'onyomi', headerName: 'Онйомі', editable: true, width: 130 },
+        { field: 'ua_translation', headerName: 'Переклад', editable: true, width: 200 },
+        { field: 'en_translation', headerName: 'Англійський переклад', editable: true, width: 200 },
+        { field: 'created_by', headerName: 'Додано', width: 130, renderCell: (params) => <Link href={`/user/${params.row.created_by.username}`}>{params.row.created_by.username}</Link> },
         {
-            field: 'approved', headerName: 'Approved', width: 130,
+            field: 'approved', headerName: 'Підтверджено', width: 130,
             renderCell: (params) => <>
-                {params.row.approved ? <>✅ by <Link href={`/user/${params.row.created_by.username}`}>{params.row.approved_by.username}</Link></> : "❌"}
+                {params.row.approved ? <>✅ <Link href={`/user/${params.row.created_by.username}`}>{params.row.approved_by.username}</Link></> : "❌"}
             </>
         },
         {
@@ -190,8 +190,8 @@ export default function Table({ rowsInit }) {
                 ];
             },
         },
-        { field: 'approve_button', headerName: '', width: 100, renderCell: (params) => <ApproveButton uuid={params.row.uuid}>Approve</ApproveButton> },
-        { field: 'delete_button', headerName: '', width: 100, renderCell: (params) => <DeleteButton uuid={params.row.uuid}>Delete</DeleteButton> },
+        { field: 'approve_button', headerName: '', width: 100, renderCell: (params) => <ApproveButton uuid={params.row.uuid}></ApproveButton> },
+        { field: 'delete_button', headerName: '', width: 100, renderCell: (params) => <DeleteButton uuid={params.row.uuid}></DeleteButton> },
     ];
 
     return (

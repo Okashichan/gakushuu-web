@@ -15,7 +15,7 @@ import ServerHeaderUser from './ServerHeaderUser';
 import HeaderSearch from './HeaderSearch';
 
 export default function Header() {
-    const pages = [{ name: 'Конфігуроване тестування', url: '/quiz' }, { name: 'Хіраґана', url: '/quiz/hiragana' }, { name: 'Катакана', url: '/quiz/katakana' }, { name: 'Транслітерація', url: '/' }];
+    const pages = [{ name: 'Конфігуроване тестування', url: '/quiz' }, { name: 'Хіраґана', url: '/quiz/hiragana' }, { name: 'Катакана', url: '/quiz/katakana' }, { name: 'Транслітерація', url: '/translitaration' }];
 
     return (
         <AppBar sx={{ bgcolor: pink[300] }} position="static">

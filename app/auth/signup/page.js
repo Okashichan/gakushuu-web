@@ -1,18 +1,14 @@
 'use client';
-import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
+import { Avatar, Button, TextField, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { useNotification } from '@/context/NotificationContext';
 
 const url = `${process.env.NEXT_PUBLIC_API_URL}/user`;
 
 export default function SignIn() {
     const router = useRouter();
+    const showNotification = useNotification();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -36,10 +32,11 @@ export default function SignIn() {
             const response = await fetch(url, options);
 
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                showNotification('Помилка реєстрації. Такий нікнейм чи пошта уже існують.', 'error');
+                return;
             }
 
-            const responseData = await response.json();
+            showNotification('Успішна реєстрація', 'success');
 
             router.push('/auth/login');
         } catch (error) {
@@ -69,7 +66,7 @@ export default function SignIn() {
                         required
                         fullWidth
                         id="username"
-                        label="Your username"
+                        label="Ваш нікнейм"
                         name="username"
                         autoComplete="username"
                         autoFocus
@@ -79,7 +76,7 @@ export default function SignIn() {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Поштова скринька"
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -89,7 +86,7 @@ export default function SignIn() {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Пароль"
                         type="password"
                         id="password"
                         autoComplete="current-password"
@@ -100,7 +97,7 @@ export default function SignIn() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign up
+                        Зареєструватися
                     </Button>
                 </Box>
             </Box>
