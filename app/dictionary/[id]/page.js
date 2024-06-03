@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { getCookie } from '@/utils/cookies';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}`;
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AddToDictionary({ params }) {
     const router = useRouter();
