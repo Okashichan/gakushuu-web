@@ -20,7 +20,8 @@ export default function AddToDictionary({ params }) {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                    },
+                        'Content-Type': 'application/json',
+                    }
                 });
 
                 if (!response.ok) {
@@ -38,10 +39,13 @@ export default function AddToDictionary({ params }) {
     }, []);
 
     const submitData = async (data) => {
+        const sUrl = `${url}/dictionary`;
+        console.log(sUrl);
         try {
-            const response = await fetch(`${url}/dictionary`, {
+            const response = await fetch(sUrl, {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + await getCookie('token'),
                 },
