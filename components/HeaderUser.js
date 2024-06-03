@@ -54,7 +54,7 @@ export default function HeaderUser({ user }) {
                                 aria-haspopup="true"
                                 aria-expanded={open ? 'true' : undefined}
                             >
-                                <Avatar src={"http://" + user.avatar_url} sx={{ width: 32, height: 32 }} />
+                                <Avatar src={user.avatar_url} sx={{ width: 32, height: 32 }} />
                             </IconButton>
                         </Tooltip>
                     </Box>
@@ -94,7 +94,7 @@ export default function HeaderUser({ user }) {
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
                         <MenuItem>
-                            <Avatar src={"http://" + user.avatar_url} />&nbsp;<StyledLink href={`/user/${user.username}`}>Профіль</StyledLink>
+                            <Avatar src={user.avatar_url} />&nbsp;<StyledLink href={`/user/${user.username}`}>Профіль</StyledLink>
                         </MenuItem>
                         <Divider />
                         <MenuItem>

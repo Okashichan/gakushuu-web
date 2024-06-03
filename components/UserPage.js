@@ -252,7 +252,7 @@ export default function UserPage({ user }) {
     return (
         <Container sx={{ pb: 4 }}>
             <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-                <Avatar src={"http://" + user.avatar_url} alt={user.username} sx={{ width: 100, height: 100 }} />
+                <Avatar src={user.avatar_url} alt={user.username} sx={{ width: 100, height: 100 }} />
                 <Typography variant="h4" mt={2}>{user.username}</Typography>
                 <Typography variant="body1">{user.email}</Typography>
                 <Box display="flex" alignItems="center" mt={1}>
