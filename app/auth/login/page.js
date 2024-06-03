@@ -9,14 +9,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { unstable_noStore as noStore } from 'next/cache'
 
 import { setCookie } from '@/utils/cookies';
 
-export default function SignIn() {
-    noStore();
-    const url = process.env.NEXT_PUBLIC_API_URL + '/token';
+const url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
 
+export default function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
