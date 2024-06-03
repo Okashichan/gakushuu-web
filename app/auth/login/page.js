@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 
 import { setCookie } from '@/utils/cookies';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
+const url = process.env.NEXT_PUBLIC_API_URL + '/token';
 
 export default function SignIn() {
     const handleSubmit = async (event) => {
