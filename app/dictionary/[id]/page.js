@@ -91,7 +91,7 @@ export default function AddToDictionary({ params }) {
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Kanji"
+                                label="Канджі"
                                 name="kanji"
                                 value={data.kanji}
                                 onChange={handleChange}
@@ -99,7 +99,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Hiragana"
+                                label="Хіраґана"
                                 name="hiragana"
                                 value={data.hiragana}
                                 onChange={handleChange}
@@ -108,7 +108,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Katakana"
+                                label="Катакана"
                                 name="katakana"
                                 value={data.katakana}
                                 onChange={handleChange}
@@ -116,7 +116,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Kunyomi"
+                                label="Кунне читання"
                                 name="kunyomi"
                                 value={data.kunyomi}
                                 onChange={handleChange}
@@ -124,7 +124,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Onyomi"
+                                label="Онне читання"
                                 name="onyomi"
                                 value={data.onyomi}
                                 onChange={handleChange}
@@ -132,7 +132,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="English Translation"
+                                label="Англійський переклад"
                                 name="en_translation"
                                 value={data.en_translation}
                                 onChange={handleChange}
@@ -140,7 +140,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Ukrainian Translation"
+                                label="Переклад"
                                 name="ua_translation"
                                 value={data.ua_translation}
                                 onChange={handleChange}
@@ -149,7 +149,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Romanization"
+                                label="Ромаджі"
                                 name="romanization"
                                 value={data.romaji}
                                 onChange={handleChange}
@@ -158,7 +158,7 @@ export default function AddToDictionary({ params }) {
                             />
                             <TextField
                                 style={{ marginBottom: 10 }}
-                                label="Transliteration"
+                                label="Транслітерація"
                                 name="transliteration"
                                 value={data.transliteration}
                                 onChange={handleChange}

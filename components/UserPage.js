@@ -194,6 +194,12 @@ export default function UserPage({ user }) {
                 is_public: newCollection?.is_public ? newCollection.is_public : false
             };
 
+            if (data.name === undefined || data.description === undefined) {
+                showNotification('Заповніть всі поля', 'error');
+                setNewCollection({});
+                return;
+            }
+
             options.body = JSON.stringify(data);
 
             await fetch(newUrl, options);

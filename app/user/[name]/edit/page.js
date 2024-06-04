@@ -130,7 +130,7 @@ export default function UserEdit({ params }) {
                         required
                         fullWidth
                         id="username"
-                        label="Your username"
+                        label="Нове ім'я"
                         name="username"
                         autoComplete="username"
                         autoFocus
@@ -140,7 +140,7 @@ export default function UserEdit({ params }) {
                         margin="normal"
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Поточний пароль"
                         type="password"
                         id="password"
                         autoComplete="current-password"
