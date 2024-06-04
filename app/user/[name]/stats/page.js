@@ -12,7 +12,7 @@ async function getUserStats() {
     return stats;
 }
 
-export default async function HiraganaQuiz() {
+export default async function Home() {
     const userStats = await getUserStats();
 
     return (
